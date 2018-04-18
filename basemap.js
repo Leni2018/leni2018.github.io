@@ -38,5 +38,17 @@ let myLayers = {
         )
 };
 
-myMap.addLayer(myLayers.bmapoverlay); // hier werden die beiden vorher definierten Variablen kombiniert > Layer wird an Karte angehängt
+myMap.addLayer(myLayers.geolandbasemap); // hier werden die beiden vorher definierten Variablen kombiniert > Layer wird an Karte angehängt
+
+let myMapControl = L.control.layers({
+    "Openstreetmap" : myLayers.osm,
+    "basemap.at Grundkarte" : myLayers.geolandbasemap,
+    "basemap.at Overlay" : myLayers.bmapoverlay,
+    "basemap.at grau"  : myLayers.bmapgrau,
+    "basemap.at highdpi" : myLayers.bmaphidpi,
+    "basemap.at Orthofoto" : myLayers.bmaporthofoto30cm,
+}); //fügt Controlkasten oben rechts in HTML-Seite auf Karte ein > Umschalten auf OpenStreetMap möglich
+
+myMap.addControl(myMapControl);
+
 myMap.setView([47.267,11.383], 11); //Eckige Klammern > für Koordinaten (Zentrum der Karte), Zahl dahinter: Zoomgröße;
