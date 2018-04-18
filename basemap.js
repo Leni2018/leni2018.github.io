@@ -43,11 +43,14 @@ myMap.addLayer(myLayers.geolandbasemap); // hier werden die beiden vorher defini
 let myMapControl = L.control.layers({
     "Openstreetmap" : myLayers.osm,
     "basemap.at Grundkarte" : myLayers.geolandbasemap,
-    "basemap.at Overlay" : myLayers.bmapoverlay,
+    
     "basemap.at grau"  : myLayers.bmapgrau,
     "basemap.at highdpi" : myLayers.bmaphidpi,
     "basemap.at Orthofoto" : myLayers.bmaporthofoto30cm,
-}); //fügt Controlkasten oben rechts in HTML-Seite auf Karte ein > Umschalten auf OpenStreetMap möglich
+    //fügt Controlkasten oben rechts in HTML-Seite auf Karte ein > Umschalten auf OpenStreetMap möglich
+},{
+    "basemap.at Overlay" : myLayers.bmapoverlay,
+}); 
 
 myMap.addControl(myMapControl);
 
