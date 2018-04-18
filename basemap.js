@@ -6,22 +6,37 @@ let myLayers = {
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         ),
         geolandbasemap: L.tileLayer(
-            "https://maps.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png"
+            "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", {
+                subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"], //= Optionenopjekt; sagt Leafmap, dass statt Platzhalter {s} "maps", "maps1", "maps2", etc eingesetzt werden soll
+                attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>" // zeigt unten rechts diesen Quellentext an
+            }
         ),
          // geolandbasemap aus Name des Links unten, Link von oben
         bmapoverlay: L.tileLayer(
-            "https://maps.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png"
+            "https://{s}.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", {
+                subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
+                attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"
+            }
         ),
         bmapgrau: L.tileLayer (
-            "https://maps.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png"
+            "https://{s}.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png", {
+                subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
+                attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"
+            }
         ),
         bmaphidpi: L.tileLayer(
-            "https://maps.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jepg"
+            "https://{s}.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jpeg", {
+                subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
+                attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"
+            }
         ),
         bmaporthofoto30cm: L.tileLayer(
-            "https://maps.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jepg"
+            "https://{s].wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
+                subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
+                attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"
+            }
         )
 };
 
-myMap.addLayer(myLayers.bmapgrau); // hier werden die beiden vorher definierten Variablen kombiniert > Layer wird an Karte angehängt
+myMap.addLayer(myLayers.bmapoverlay); // hier werden die beiden vorher definierten Variablen kombiniert > Layer wird an Karte angehängt
 myMap.setView([47.267,11.383], 11); //Eckige Klammern > für Koordinaten (Zentrum der Karte), Zahl dahinter: Zoomgröße;
