@@ -76,8 +76,8 @@ myMap.setView([47.267,11.383],11) // doclink: http://leafletjs.com/reference-1.3
 // Maßstabsleiste/Scale einfügen:
 L.control.scale({ // doclink Scale: http://leafletjs.com/reference-1.3.0.html#control-scale-l-control-scale
     // doclink Optionen: http://leafletjs.com/reference-1.3.0.html#control-scale-maxwidth
-    maxWidth: 200,
-    metric: true,
-    imperial: false,
-    position: "bottomleft"
+    maxWidth: 200, //doclink http://leafletjs.com/reference-1.3.0.html#control-scale-maxwidth
+    metric: true, // doclink http://leafletjs.com/reference-1.3.0.html#control-scale-metric
+    imperial: false, // doclink http://leafletjs.com/reference-1.3.0.html#control-scale-imperial
+    position: "bottomleft", // doclink http://leafletjs.com/reference-1.3.0.html#control-scale-position
 }).addTo(myMap);
