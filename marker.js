@@ -81,3 +81,5 @@ L.control.scale({ // doclink Scale: http://leafletjs.com/reference-1.3.0.html#co
     imperial: false, // doclink http://leafletjs.com/reference-1.3.0.html#control-scale-imperial
     position: "bottomleft", // doclink http://leafletjs.com/reference-1.3.0.html#control-scale-position
 }).addTo(myMap);
+
+L.marker([47.264, 11.385]).addTo(myMap);
