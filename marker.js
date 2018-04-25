@@ -1,4 +1,5 @@
 let myMap = L.map("mapdiv"); // doclink: http://leafletjs.com/reference-1.3.0.html#map-l-map
+let markerGroup = L.featureGroup();
 let myLayers= {
     osm: L.tileLayer // doclink tileLayer: http://leafletjs.com/reference-1.3.0.html#tilelayer-l-tilelayer
     (
@@ -48,7 +49,7 @@ let myLayers= {
 
 myMap.addLayer(myLayers.osm); // doclink: http://leafletjs.com/reference-1.3.0.html#map-addlayer
 // hiermit wird Layer zur Karte hinzugefügt (zusammenführen der vorher gesetzten Variablen)
-
+myMap.addLayer(markerGroup);
 
 let myMapControl = L.control.layers ({ // doclink: http://leafletjs.com/reference-1.3.0.html#control-layers-l-control-layers
     
@@ -59,7 +60,8 @@ let myMapControl = L.control.layers ({ // doclink: http://leafletjs.com/referenc
     "basemap.at Orthofoto":myLayers.bmaporthofoto30cm,
     
 },
-{   "basemap.at Overlay":myLayers.bmapoverlay,
+{   "basemap.at Overlay": myLayers.bmapoverlay,
+    "Marker" : markerGroup,
 },
 
 
@@ -85,12 +87,19 @@ L.control.scale({ // doclink Scale: http://leafletjs.com/reference-1.3.0.html#co
 const uni = [47.264, 11.385];
 const usi = [47.257, 11.356];
 const technik = [47.263, 11.343];
+myMap.addLayer(markerGroup);
 const markerOptions = {
     title: "Universität Innsbruck",
     opacity: 0.7,
     draggable: true,
 }
-L.marker(uni, markerOptions).addTo(myMap);
-L.marker(usi, markerOptions).addTo(myMap);
-L.marker(technik, markerOptions).addTo(myMap);
-myMap.setView(uni, 13);
+const igls = [47.234, 11.409];
+const patschakofel = [47.218, 11.467]; 
+
+L.marker(uni, markerOptions).addTo(markerGroup);
+L.marker(usi, markerOptions).addTo(markerGroup);
+L.marker(technik, markerOptions).addTo(markerGroup);
+L.marker(igls, markerOptions).addTo(markerGroup);
+L.marker(patschakofel, markerOptions).addTo(markerGroup).bindPopup ("<p>Patschakofel im Herbst</p><img style = 'width:200px' src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Patscherkofel_vm01.jpg' alt='Patscherkofl' />");
+myMap.fitBounds(markerGroup.getBounds());myMap.fitBounds(markerGroup.getBounds());
+
