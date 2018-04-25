@@ -1,57 +1,83 @@
-
-let myMap = L.map('mapdiv');
-// Variable heißt myMap; L verweist auf Leaflet-Bibliothek/spricht die Leaflet-Bib an > über map wird neue Karte erstellt; ihr wird mit "mapdiv" die id der div zugewiesen, die im html-File schon vorhanden ist > verlrtet die Karte auf htmlSeite >> Verbindung zw .js und .html-File
-let myLayers = {
-    osm: L.tileLayer (
-        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-        ),
-        geolandbasemap: L.tileLayer(
-            "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", {
-                subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"], //= Optionenopjekt; sagt Leafmap, dass statt Platzhalter {s} "maps", "maps1", "maps2", etc eingesetzt werden soll
-                attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>" // zeigt unten rechts diesen Quellentext an
-            }
-        ),
-         // geolandbasemap aus Name des Links unten, Link von oben
-        bmapoverlay: L.tileLayer(
-            "https://{s}.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", {
-                subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
-                attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"
-            }
-        ),
-        bmapgrau: L.tileLayer (
-            "https://{s}.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png", {
-                subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
-                attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"
-            }
-        ),
-        bmaphidpi: L.tileLayer(
-            "https://{s}.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jpeg", {
-                subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
-                attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"
-            }
-        ),
-        bmaporthofoto30cm: L.tileLayer(
-            "https://{s].wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
-                subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
-                attribution : "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"
-            }
-        )
+let myMap = L.map("mapdiv"); // doclink: http://leafletjs.com/reference-1.3.0.html#map-l-map
+let myLayers= {
+    osm: L.tileLayer // doclink tileLayer: http://leafletjs.com/reference-1.3.0.html#tilelayer-l-tilelayer
+    (
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        { //Objekt mit den Optionen subdomains und attribution wie unten hinzugefügt
+            subdomains : ["a", "b", "c"], // doclink:http://leafletjs.com/reference-1.3.0.html#tilelayer-subdomains
+            attribution: "Datenquelle: <a href='https://www.openstreetmap.org'>openstreetmap.org</a>", // doclink: http://leafletjs.com/reference-1.3.0.html#layer-attribution
+        }
+    ),
+    geolandbasemap: L.tileLayer(
+        "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png",
+        {
+        subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
+        attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>" 
+        }
+    ),
+    bmapoverlay: L.tileLayer (
+        "https://{s}.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png",
+        {
+            subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
+            attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>" 
+        }
+    ),
+    bmapgrau: L.tileLayer (
+        "https://{s}.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png",
+        {
+            subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
+            attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>" 
+        }
+    ),
+    bmaphidpi: L.tileLayer (
+        "https://{s}.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jpeg",
+        {
+            subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
+            attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>" 
+        }
+    ),
+    bmaporthofoto30cm: L.tileLayer (
+        "https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg",
+        {
+            subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
+            attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>" 
+        }
+    )
 };
 
-myMap.addLayer(myLayers.geolandbasemap); // hier werden die beiden vorher definierten Variablen kombiniert > Layer wird an Karte angehängt
 
-let myMapControl = L.control.layers({
-    "Openstreetmap" : myLayers.osm,
-    "basemap.at Grundkarte" : myLayers.geolandbasemap,
+myMap.addLayer(myLayers.osm); // doclink: http://leafletjs.com/reference-1.3.0.html#map-addlayer
+// hiermit wird Layer zur Karte hinzugefügt (zusammenführen der vorher gesetzten Variablen)
+
+
+let myMapControl = L.control.layers ({ // doclink: http://leafletjs.com/reference-1.3.0.html#control-layers-l-control-layers
     
-    "basemap.at grau"  : myLayers.bmapgrau,
-    "basemap.at highdpi" : myLayers.bmaphidpi,
-    "basemap.at Orthofoto" : myLayers.bmaporthofoto30cm,
-    //fügt Controlkasten oben rechts in HTML-Seite auf Karte ein > Umschalten auf OpenStreetMap möglich
-},{
-    "basemap.at Overlay" : myLayers.bmapoverlay,
-}); 
+    "Openstreetmap" :myLayers.osm,
+    "basemap.at Gundkarte":myLayers.geolandbasemap,
+    "basemap.at grau":myLayers.bmapgrau,
+    "basemap.at highdpi":myLayers.bmaphidpi,
+    "basemap.at Orthofoto":myLayers.bmaporthofoto30cm,
+    
+},
+{   "basemap.at Overlay":myLayers.bmapoverlay,
+},
 
-myMap.addControl(myMapControl);
 
-myMap.setView([47.267,11.383], 11); //Eckige Klammern > für Koordinaten (Zentrum der Karte), Zahl dahinter: Zoomgröße;
+{"collapsed":false}); // doclink für collapse: http://leafletjs.com/reference-1.3.0.html#control-layers-collapsed
+//! false bewirkt, dass Liste gleich ausgeklappt geöffnet wird (bei :true > mousover öffnet Liste)
+
+
+myMap.addControl (myMapControl); // doclink: http://leafletjs.com/reference-1.3.0.html#map-addcontrol
+
+myMap.setView([47.267,11.383],11) // doclink: http://leafletjs.com/reference-1.3.0.html#map-setview
+// damit wird Zentrum der Karte gesetzt
+
+
+// Maßstabsleiste/Scale einfügen:
+L.control.scale({ // doclink Scale: http://leafletjs.com/reference-1.3.0.html#control-scale-l-control-scale
+    // doclink Optionen: http://leafletjs.com/reference-1.3.0.html#control-scale-maxwidth
+    maxWidth: 200,
+    metric: true,
+    imperial: false,
+    position: "bottomleft"
+}).addTo(myMap);
