@@ -103,3 +103,10 @@ L.marker(igls, markerOptions).addTo(markerGroup);
 L.marker(patschakofel, markerOptions).addTo(markerGroup).bindPopup ("<p>Patschakofel im Herbst</p><img style = 'width:200px' src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Patscherkofel_vm01.jpg' alt='Patscherkofl' />");
 myMap.fitBounds(markerGroup.getBounds());myMap.fitBounds(markerGroup.getBounds());
 
+var latlngs = [
+    [47.234, 11.409],
+    [47.218, 11.467],
+];
+var polyline = L.polyline(latlngs, {color: 'red'}).addTo(myMap);
+
+
