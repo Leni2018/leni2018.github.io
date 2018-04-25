@@ -110,7 +110,7 @@ var polyline = L.polyline(latlngs, {color: 'red'}).addTo(myMap);
 
 let uniPolygon = L.polygon ([uni, usi, technik]);
 myMap.addLayer(uniPolygon);
-uniPolygon.binPopup("Ende im Gelände!");
+uniPolygon.bindPopup("Ende im Gelände!");
 
 myMap.fitBounds(markerGroup.getBounds());myMap.fitBounds(markerGroup.getBounds());
 
