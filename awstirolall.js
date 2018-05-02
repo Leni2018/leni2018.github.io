@@ -71,7 +71,7 @@ let myMapControl = L.control.layers ({ // doclink: http://leafletjs.com/referenc
 
 myMap.addControl (myMapControl); // doclink: http://leafletjs.com/reference-1.3.0.html#map-addcontrol
 myMap.addLayer (awsGroup);
-myMap.setView([47.267,11.383],11) // doclink: http://leafletjs.com/reference-1.3.0.html#map-setview
+//myMap.setView([47.267,11.383],11) // doclink: http://leafletjs.com/reference-1.3.0.html#map-setview
 // damit wird Zentrum der Karte gesetzt
 
 
@@ -88,8 +88,9 @@ console.log("Stationen: ", stationen);
 
 let geojson = L.geoJSON(stationen).addTo(awsGroup);
 geojson.bindPopup(function(layer) {
-    const props = layer.feature.properties;
+    const props = layer.feature.properties.object.properties;
     const popupText = `<h1>${props.name}</h1><p>Temperatur: ${props.LT} °C</p>`;
     return popupText;
-});
+//} 
+//) ;
 myMap.fitBounds(awsGroup.getBounds());
