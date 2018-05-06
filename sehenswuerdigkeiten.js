@@ -1,8 +1,8 @@
 let myMap = L.map("mapdiv"); // doclink: http://leafletjs.com/reference-1.3.0.html#map-l-map
-const wienGroup = L.featureGroup();
+const swGroup = L.featureGroup();
 const myIcon = L.icon({
-    iconUrl: 'icons/statue-gelb.png',
-    //iconSize: [38, 60],
+    iconUrl: 'icons/sw.png',
+    iconSize: [20, 20],
     // iconAnchor: [22, 94],
     // popupAnchor: [-3, -76],
 });
@@ -71,7 +71,7 @@ let myMapControl = L.control.layers({ // doclink: http://leafletjs.com/reference
 },
     {
         "basemap.at Overlay": myLayers.bmapoverlay,
-        "Stadtspaziergang Wien Stationen": wienGroup,
+        "Sehenswürdigkeiten Wien": swGroup,
     },
 
 
@@ -80,7 +80,7 @@ let myMapControl = L.control.layers({ // doclink: http://leafletjs.com/reference
 
 
 myMap.addControl(myMapControl); // doclink: http://leafletjs.com/reference-1.3.0.html#map-addcontrol
-myMap.setView([47.266100, 11.401104], 11);
+//myMap.setView([47.266100, 11.401104], 11);
 
 
 // Maßstabsleiste/Scale einfügen:
@@ -92,7 +92,7 @@ L.control.scale({ // doclink Scale: http://leafletjs.com/reference-1.3.0.html#co
     position: "bottomleft", // doclink http://leafletjs.com/reference-1.3.0.html#control-scale-position
 }).addTo(myMap);
 
-console.log("Wien Stadtspaziergang Stationen: ", stadtspaziergang);
+console.log("Sehenswürdigkeiten Wien: ", swstandorte);
 
 async function addGeojson(url) {
     console.log("Url wird geladen: ", url);
@@ -112,16 +112,16 @@ async function addGeojson(url) {
     });
 
 
-    wienGroup.addLayer(geojson);
-    myMap.fitBounds(wienGroup.getBounds()); //setboundaries muss hier eingebaut werden anstatt am Ende der Seite, weil es sonst zu spät abgerufen wird >> asynchrone Funktion!
+    swGroup.addLayer(geojson);
+    myMap.fitBounds(swGroup.getBounds()); //setboundaries muss hier eingebaut werden anstatt am Ende der Seite, weil es sonst zu spät abgerufen wird >> asynchrone Funktion!
 }
 // async gibt was an, was läd, aber ein bisschen dauern kann
 
-const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&srsName=EPSG:4326&outputFormat=json&typeName=ogdwien:SPAZIERPUNKTOGD,ogdwien:SPAZIERLINIEOGD";
+const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json";
 
 addGeojson(url);
 
-myMap.addLayer(wienGroup);
+myMap.addLayer(swGroup);
 //let geojson = L.geoJSON(stadtspaziergang).addTo(wienGroup);
 //geojson.bindPopup(function(layer) {
   //  const props = layer.feature.properties;
