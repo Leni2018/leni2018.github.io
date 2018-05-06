@@ -1,10 +1,10 @@
 let myMap = L.map("mapdiv"); // doclink: http://leafletjs.com/reference-1.3.0.html#map-l-map
-const wienGroup = L.featureGroup();
+const citybikeGroup = L.featureGroup();
 const myIcon = L.icon({
-    iconUrl: 'icons/statue-gelb.png',
-    //iconSize: [38, 60],
-    // iconAnchor: [22, 94],
-    // popupAnchor: [-3, -76],
+    iconUrl: 'icons/citybikewien.png',
+    iconSize: [20, 20],
+    //iconAnchor: [0, 0]
+    //popupAnchor: [3, -76],
 });
 //shadowUrl: 'my-icon-shadow.png',
 //shadowSize: [68, 95],
@@ -71,7 +71,7 @@ let myMapControl = L.control.layers({ // doclink: http://leafletjs.com/reference
 },
     {
         "basemap.at Overlay": myLayers.bmapoverlay,
-        "Stadtspaziergang Wien Stationen": wienGroup,
+        "Citybike Stationen": citybikeGroup,
     },
 
 
@@ -80,7 +80,7 @@ let myMapControl = L.control.layers({ // doclink: http://leafletjs.com/reference
 
 
 myMap.addControl(myMapControl); // doclink: http://leafletjs.com/reference-1.3.0.html#map-addcontrol
-myMap.setView([47.266100, 11.401104], 11);
+//myMap.setView([47.266100, 11.401104], 11);
 
 
 // Maßstabsleiste/Scale einfügen:
@@ -92,7 +92,13 @@ L.control.scale({ // doclink Scale: http://leafletjs.com/reference-1.3.0.html#co
     position: "bottomleft", // doclink http://leafletjs.com/reference-1.3.0.html#control-scale-position
 }).addTo(myMap);
 
-console.log("Wien Stadtspaziergang Stationen: ", cbstandorte);
+console.log("Citybike Standorte: ", cbstandorte);
+
+//let geojson = L.geoJSON(cbstandorte).addTo(myMap);
+//geojson.bindPopup(function(layer) {
+//    const popupText = `<h1>${layer.feature.properties.STATION}</h1>`;
+//   return popupText;
+//});
 
 async function addGeojson(url) {
     console.log("Url wird geladen: ", url);
@@ -112,8 +118,8 @@ async function addGeojson(url) {
     });
 
 
-    wienGroup.addLayer(geojson);
-    myMap.fitBounds(wienGroup.getBounds()); //setboundaries muss hier eingebaut werden anstatt am Ende der Seite, weil es sonst zu spät abgerufen wird >> asynchrone Funktion!
+    citybikeGroup.addLayer(geojson);
+    myMap.fitBounds(citybikeGroup.getBounds()); //setboundaries muss hier eingebaut werden anstatt am Ende der Seite, weil es sonst zu spät abgerufen wird >> asynchrone Funktion!
 }
 // async gibt was an, was läd, aber ein bisschen dauern kann
 
@@ -121,7 +127,7 @@ const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&ve
 
 addGeojson(url);
 
-myMap.addLayer(wienGroup);
+myMap.addLayer(citybikeGroup);
 //let geojson = L.geoJSON(stadtspaziergang).addTo(wienGroup);
 //geojson.bindPopup(function(layer) {
   //  const props = layer.feature.properties;
