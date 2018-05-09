@@ -115,7 +115,11 @@ async function addGeojson(url) {
             });
         }});
         const hash = new L.Hash(myMap);  
-    ;
+        myMap.addControl(new L.Control.Search({
+            layer: citybikeGroup,
+            propertyName: 'STATION'
+        }) );
+    
 
 
     citybikeGroup.addLayer(geojson);
