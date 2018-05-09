@@ -1,10 +1,10 @@
 let myMap = L.map("mapdiv"); // doclink: http://leafletjs.com/reference-1.3.0.html#map-l-map
-const citybikeGroup = L.featureGroup();
+const citybikeGroup = L.markerClusterGroup();
 const myIcon = L.icon({
-    iconUrl: 'icons/citybikewien.png',
+   iconUrl: 'icons/citybikewien.png',
     iconSize: [20, 20],
-    //iconAnchor: [0, 0]
-    //popupAnchor: [3, -76],
+    iconAnchor: [0, 0],
+    popupAnchor: [3, -76],
 });
 //shadowUrl: 'my-icon-shadow.png',
 //shadowSize: [68, 95],
@@ -92,13 +92,12 @@ L.control.scale({ // doclink Scale: http://leafletjs.com/reference-1.3.0.html#co
     position: "bottomleft", // doclink http://leafletjs.com/reference-1.3.0.html#control-scale-position
 }).addTo(myMap);
 
-console.log("Citybike Standorte: ", cbstandorte);
-
 //let geojson = L.geoJSON(cbstandorte).addTo(myMap);
 //geojson.bindPopup(function(layer) {
 //    const popupText = `<h1>${layer.feature.properties.STATION}</h1>`;
 //   return popupText;
 //});
+
 
 async function addGeojson(url) {
     console.log("Url wird geladen: ", url);
@@ -114,8 +113,9 @@ async function addGeojson(url) {
             return L.marker(latlng, {
                 icon: myIcon
             });
-        }
-    });
+        }});
+        const hash = new L.Hash(myMap);  
+    ;
 
 
     citybikeGroup.addLayer(geojson);
@@ -123,7 +123,7 @@ async function addGeojson(url) {
 }
 // async gibt was an, was läd, aber ein bisschen dauern kann
 
-const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:CITYBIKEOGD&srsName=EPSG:4326&outputFormat=json";
+const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:CITYBIKEOGD&srsName=EPSG:4326&outputFormat=json"; // durch await in der async function kann die url auch erst unter der Funktion definiert werden
 
 addGeojson(url);
 
