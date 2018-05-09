@@ -1,7 +1,7 @@
 let myMap = L.map("mapdiv"); // doclink: http://leafletjs.com/reference-1.3.0.html#map-l-map
 const citybikeGroup = L.markerClusterGroup();
 const myIcon = L.icon({
-   iconUrl: 'icons/citybikewien.png',
+    iconUrl: 'icons/citybikewien.png',
     iconSize: [20, 20],
     iconAnchor: [0, 0],
     popupAnchor: [3, -76],
@@ -11,13 +11,13 @@ const myIcon = L.icon({
 //shadowAnchor: [22, 94]
 let myLayers = {
     osm: L.tileLayer // doclink tileLayer: http://leafletjs.com/reference-1.3.0.html#tilelayer-l-tilelayer
-        (
+    (
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         { //Objekt mit den Optionen subdomains und attribution wie unten hinzugefügt
             subdomains: ["a", "b", "c"], // doclink:http://leafletjs.com/reference-1.3.0.html#tilelayer-subdomains
             attribution: "Datenquelle: <a href='https://www.openstreetmap.org'>openstreetmap.org</a>", // doclink: http://leafletjs.com/reference-1.3.0.html#layer-attribution
         }
-        ),
+    ),
     geolandbasemap: L.tileLayer(
         "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png",
         {
@@ -113,13 +113,14 @@ async function addGeojson(url) {
             return L.marker(latlng, {
                 icon: myIcon
             });
-        }});
-        const hash = new L.Hash(myMap);  
-        myMap.addControl(new L.Control.Search({
-            layer: citybikeGroup,
-            propertyName: 'STATION'
-        }) );
-    
+        }
+    });
+    const hash = new L.Hash(myMap);
+    myMap.addControl(new L.Control.Search({
+        layer: citybikeGroup,
+        propertyName: 'STATION'
+    }));
+
 
 
     citybikeGroup.addLayer(geojson);
@@ -132,10 +133,10 @@ const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&ve
 addGeojson(url);
 
 myMap.addLayer(citybikeGroup);
-//let geojson = L.geoJSON(stadtspaziergang).addTo(wienGroup);
-//geojson.bindPopup(function(layer) {
-  //  const props = layer.feature.properties;
+    //let geojson = L.geoJSON(stadtspaziergang).addTo(wienGroup);
+    //geojson.bindPopup(function(layer) {
+    //  const props = layer.feature.properties;
     //const popupText = `<h1>${props.NAME}</h1>`;
     //return popupText;
-//});
-//myMap.fitBounds(wienGroup.getBounds());
+    //});
+    //myMap.fitBounds(wienGroup.getBounds());

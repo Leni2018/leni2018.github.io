@@ -53,7 +53,7 @@ let kartenAuswahl = L.control.layers({
 }, {
     "GeoJSON Layer": geojsonGruppe,
 });
-karte.addControl(kartenAuswahl);
+karte.addControl(kartenAuswahl); //wird hinzugefügt
 
 // Grundkarte "grau" laden
 karte.addLayer(grundkartenLayer.bmapgrau)
@@ -75,5 +75,25 @@ async function ladeGeojsonLayer(url) {
     karte.fitBounds(geojsonGruppe.getBounds());
 }
 
+wienDatensaetze.sort(function(a,b) {
+    if (a.titel < b.titel) {
+        return -1;
+    }  else if (a.titel > b.titel) {
+        return 1;
+    } else {
+        return 0;
+    }
+    }
+)
 // den GeoJSON Layer für Grillplätze laden
-ladeGeojsonLayer("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:GRILLPLATZOGD&srsName=EPSG:4326&outputFormat=json");
+ladeGeojsonLayer(wienDatensaetze[2].json);
+
+let layerAuswahl = document.getElementById("layerAuswahl"); // > Zugriff auf das Select, das in HTML festgelegt wurde
+for (datensatz of wienDatensaetze) {
+    layerAuswahl.innerHTML += `<option value="${datensatz.json}">${datensatz.titel}</option>`
+    //console.log(datensatz.titel)
+}
+layerAuswahl.onchange = function (evt) {
+    geojsonGruppe.clearLayers();
+    ladeGeojsonLayer(evt.target.value);
+}
