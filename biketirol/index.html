@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bike Trail Tirol - Etappe StAnton nach Steeg</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../js/leaflet/leaflet.css" />
+    <script src="../js/leaflet/leaflet.js"></script>
+
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="biketirol.js"></script>
+
+</head>
+
+<body>
+    <div id="header">
+        <h2 class="white">Bike Trail Tirol</h2>
+        <h3 class="white">Die Wadeln von St. Anton nach Seeg</h3>
+    </div>
+
+    <div class="author">
+        <img src="images/user.jpg" alt="Ihr Reiseleiter" />
+        <p class="gray">
+            <a href="mailto:marlene.weiss@stuent.uibk.ac.at">Marlene Weiß</a> 
+            <a href="https://leni2018.github.io/biketirol/index.html">https://leni2018.github.io/biketirol/</a>
+        </p>
+    </div>
+
+    <hr />
+
+    
+    <div class="article">
+        <h1>Etappe 31 von St. Anton nach Steeg</h1>
+
+        <p>Auf dieser 35 Kilometer langen Strecke fahren Sie ausschließlich auf Asphaltwegen und überwinden dabei 350 Höhenmeter, wobei mit dem Arlbergpass die höchste Steigung gleich zu Beginn auf Sie wartet. Begleitet werden Sie auf dieser Etappe von schönen Panoramen und stets neuen Einblicken.</p>
+
+        TODO: Karte mit Radroute und Marker beim Start- und Endpunkt. Hintergrundkarte OSM, basemap.at und Elektronische Karte Tirol (Sommer, Winter, Orthophoto jeweils mit Beschriftung) - siehe biketirol.js
+        <div id="map"></div>
+
+        <h2>Streckenbeschreibung</h2>
+        <p>In etwa eineinviertel Stunden erreicht man über die Arlbergstraße St. Christoph kurz vor dem Pass. Danach geht es etwa 3 Kilometer abwärts bis zur Abzweigung der Straße nach Zürs und Lech. Durch Lawinengalerien aufwärts radelt man zum Flexenpass, danach wieder leicht abwärts zuerst durch Zürs und weiter über Lech nach Warth (1 Stunde 45 Minuten ab St. Christoph). Hier zweigt man beim Kreisverkehr rechts auf die Lechtalbundesstraße Richtung Reutte ab und bleibt auf dieser bis Steeg (45 Minuten ab Warth). Achtung: Für die Fahrt durch die Lawinengalerien ist eine Beleuchtung des Rades notwendig!</p>
+
+        <h3>Links</h3>
+        <ul>
+            <li><a href="https://www.tirol.at/reisefuehrer/sport/radfahren/biketouren/a-bike-trail-tirol-st-anton-steeg">Zur Ettappenbeschreibung</a></li>
+            <li><a href="https://www.tirol.at/orte/a-stanton-am-arlberg">Infos zu St. Anton am Arlberg</a></li>
+            <li><a href="http://www.steeg.tirol.gv.at/">Infos zur Gemeinde Steeg im Lechtal</a></li>
+            <li><a href="http://www.vorarlberg.at/">Infos zu Vorarlberg</a></li>
+        </ul>
+    </div>
+
+    <hr />
+
+    <!-- TODO: Links anpassen zu den benachbarten Etappen - siehe OLAT Tabelle ... -->
+    <div id="footer" class="gray">
+        <a class="back" href="../30/index.html">
+            <i class="fas fa-arrow-alt-circle-left"></i> vorhergehender Stop</a>
+        <a class="next" href="../32/index.html">nächster Stop
+            <i class="fas fa-arrow-alt-circle-right"></i>
+        </a>
+    </div>
+
+</body>
+</html>
