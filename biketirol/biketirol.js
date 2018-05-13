@@ -5,7 +5,7 @@
     Download Einzeletappen / Zur Ressource ...
     Alle Dateien im unterverzeichnis data/ ablegen
     Die .gpx Datei der eigenen Etappe als etappe00.gpx speichern
-    Die .gpx Datei über https://mapbox.github.io/togeojson/ in .geojson umwandeln und als etappe00.geojson speichern
+    Die .gpx Datei über https://mapbox.github.io/togeojson/ in .geojson umwandeln und als etappe00.geojson speichern // krieg ich damit nicht hin
     Die etappe00.geojson Datei in ein Javascript Objekt umwandeln und als etappe00.geojson.js speichern
 
     -> statt 00 natürlich die eigene Etappe (z.B. 01,02, ...25)
