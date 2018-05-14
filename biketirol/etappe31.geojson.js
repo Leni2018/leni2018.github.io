@@ -1,4 +1,4 @@
-const gpx =
+const geojson =
 {
     "type": "FeatureCollection",
     "features": [
