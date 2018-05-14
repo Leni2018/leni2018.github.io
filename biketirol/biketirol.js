@@ -103,20 +103,9 @@ L.control.scale({
 //etappeGroup.addLayer(geojson);
 
 myMap.addLayer(etappeGroup);
-const start = [47.123786, 10.247623]
-const myIcon = L.icon({
-    iconUrl: 'icons/start.png',
-    iconAnchor: [15, 35],
- })
- //L.icon(iconUrl: 'icons/start.png', iconAnchor: [15, 35],).addTo(myMap);
- L.marker([47.123786, 10.247623], {icon: myIcon}).addTo(myMap);
-  
-const finish = [47.241426, 10.292558]
-let myIcon2 = L.icon({
-    iconUrl: 'icons/finish.png',
-    iconAnchor: [15, 35],
- });
- L.marker([47.241426, 10.292558], {icon: myIcon2}).addTo(myMap);
+const start = [47.123786, 10.247623];
+const finish = [47.241426, 10.292558];
+
 
 
  /*let myIcon2 = L.icon({
@@ -125,9 +114,11 @@ let myIcon2 = L.icon({
  });
  L.marker([47.241426, 10.292558], {icon: myIcon2}).addTo(myMap);
 */
-L.marker(start).addTo(etappeGroup).bindPopup("<p>Startpunkt</p><a href='https://de.wikipedia.org/wiki/St._Anton_am_Arlberg'>Wikipedia Link</a>"); //Marker-Definition, durch bondPopup ist das Popup direkt dran
+L.marker(start, {icon: L.icon({iconUrl: 'icons/start.png', iconAnchor: [15, 35],})
+  }).addTo(etappeGroup).bindPopup("<p>Startpunkt</p><a href='https://de.wikipedia.org/wiki/St._Anton_am_Arlberg'>Wikipedia Link</a>"); //Marker-Definition, durch bondPopup ist das Popup direkt dran
 
-L.marker(finish).addTo(etappeGroup).bindPopup("<p>Endpunkt</p><a href='https://de.wikipedia.org/wiki/Steeg_(Tirol)'>Wikipedia Link</a>");
+L.marker(finish, {icon: L.icon({iconUrl: 'icons/finish.png', iconAnchor: [15, 35],})
+}).addTo(etappeGroup).bindPopup("<p>Endpunkt</p><a href='https://de.wikipedia.org/wiki/Steeg_(Tirol)'>Wikipedia Link</a>");
 
 myMap.fitBounds(etappeGroup.getBounds());
 
