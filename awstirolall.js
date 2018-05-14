@@ -91,6 +91,6 @@ geojson.bindPopup(function(layer) {
     const props = layer.feature.properties.object.properties;
     const popupText = `<h1>${props.name}</h1><p>Temperatur: ${props.LT} °C</p>`;
     return popupText;
-//} 
-//) ;
+} 
+);
 myMap.fitBounds(awsGroup.getBounds());

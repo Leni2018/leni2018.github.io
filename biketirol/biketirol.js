@@ -20,73 +20,103 @@
 
 // Start- und Endpunkte der Route als Marker mit Popup, Namen, Wikipedia Link und passenden Icons für Start/Ziel von https://mapicons.mapsmarker.com/ >> Punkt über Koordinaten definieren?
 
-// GeoJSON Track als Linie in der Karte einzeichnen und auf Ausschnitt zoomen >> mit leaflet line??
+// GeoJSON Track als Linie in der Karte einzeichnen und auf Ausschnitt zoomen >> nee, aus gpx > wie wien stadtspaziergang einbinden
 // Einbauen nicht über async, sondern über ein L.geoJSON() mit einem Javascript Objekt (wie beim ersten Stadtspaziergang Wien Beispiel)
 
 // Baselayer control für OSM, basemap.at, Elektronische Karte Tirol hinzufügen
 
 // Overlay controls zum unabhängigem Ein-/Ausschalten der Route und Marker hinzufügen
 
-let myMap = L.map("mapdiv"); 
-const myLayer = L.featuregroup ([]) 
-/*
-   [
-        osm: L.tileLayer (
-            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            {
-                subdomains : ["a", "b", "c"], 
-                attribution: "Datenquelle: <a href='https://www.openstreetmap.org'>openstreetmap.org</a>",
-            }
-        ),
-        geolandbasemap: L.tileLayer(
-            "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png",
-            {
-            subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
-            attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>" 
-            }
-        ),
-        bmaporthofoto30cm: L.tileLayer (
-            "https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg",
-            {
-                subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
-                attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>" 
-            }
-        ),
-        eKarte: L.tileLayer (
-            " http://wmts.kartetirol.at/wmts",
-            {
-              subdomains : ["maps", "maps1", "maps2", "maps3", "maps4"],
-              attribution: "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol/resource/062d55d0-4533-4d3f-b507-106bb44285b7'>elektronische Karte Tirol</a>" 
-            }
-        )
+let myMap = L.map("mapdiv");
+let myLayers = {
+    osm: L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            subdomains: ["a", "b", "c"],
+            attribution: "Datenquelle: <a href='https://www.openstreetmap.org'>openstreetmap.org</a>",
+        }
+    ),
+    geolandbasemap: L.tileLayer(
+        "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png",
+        {
+            subdomains: ["maps", "maps1", "maps2", "maps3", "maps4"],
+            attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"
+        }
+    ),
+    bmaporthofoto30cm: L.tileLayer(
+        "https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg",
+        {
+            subdomains: ["maps", "maps1", "maps2", "maps3", "maps4"],
+            attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"
+        }
+    ),
+    
+    eKartesommer: L.tileLayer(
+        "http://wmts.kartetirol.at/wmts/gdi_base_summer/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}.jpeg80",
+        {
+            attribution: "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol'>elektronische Karte Tirol Sommer</a>"
+        }
+    ),
+    eKartewinter: L.tileLayer(
+        "http://wmts.kartetirol.at/wmts/gdi_base_summer/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}.jpeg80",
+        {
+            attribution: "Datenquelle: <a href='http://wmts.kartetirol.at/wmts/gdi_base_winter/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}.jpeg80'>elektronische Karte Tirol Winter</a>"
+        }
+    ),
+    eKarteorthofoto: L.tileLayer(
+        "http://wmts.kartetirol.at/wmts/gdi_ortho/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}.jpeg80",
+        {
+            attribution: "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol'>elektronische Karte Tirol Orthophoto</a>"
+        }
+    ),
+    eKartebeschriftung: L.tileLayer(
+        "http://wmts.kartetirol.at/wmts/gdi_nomenklatur/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}.png8",
+        {
+            attribution: "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol/resource/062d55d0-4533-4d3f-b507-106bb44285b7'>elektronische Karte Tirol</a>"
+        }
+    )
+};
+let eKartesommergruppe = L.featureGroup(
+    [
+        myLayers.eKartesommer,
+        myLayers.eKartebeschriftung,
     ]
 )
-)};
-*/
-        
-myMap.addLayer(myLayers); 
-    
-    let myMapControl = L.control.layers ({ // doclink: 
-        
-        "Openstreetmap" :myLayers.osm,
-        "basemap.at Gundkarte":myLayers.geolandbasemap,
-        "basemap.at Orthofoto":myLayers.bmaporthofoto30cm,
-        "eKarte Tirol": myLayers.eKarte,
+let eKartewintergruppe = L.featureGroup(
+    [
+        myLayers.eKartewinter,
+        myLayers.eKartebeschriftung,
+    ]
+)
+let eKarteorthogruppe = L.featureGroup(
+    [
+        myLayers.eKarteorthofoto,
+        myLayers.eKartebeschriftung,
+    ]
+);
+
+myMap.addLayer(myLayers.osm);
+
+let myMapControl = L.control.layers({
+
+    "Openstreetmap": myLayers.osm,
+    "basemap.at Gundkarte": myLayers.geolandbasemap,
+    "basemap.at Orthofoto": myLayers.bmaporthofoto30cm,
+    "eKarte Tirol Sommer": eKartesommergruppe,
+    "eKarte Tirol Winter": eKartewintergruppe,
+    "eKarte Tirol Sommer": eKarteorthogruppe,
+
 },
-//{  "Baselayer Control" : markerGroup,
-  // "Overlay Control" : markerGroup,
-//},
 
-{"collapsed":false}); 
+    { "collapsed": false });
 
-myMap.addControl (myMapControl); 
+myMap.addControl(myMapControl);
 
-
-L.control.scale({ 
-    maxWidth: 200, 
-    metric: true, 
-    imperial: false, 
+L.control.scale({
+    maxWidth: 200,
+    metric: true,
+    imperial: false,
     position: "bottomleft",
 }).addTo(myMap);
 
-myMap.fitBounds(linie.getBounds()); 
+//myMap.fitBounds(linie.getBounds()); 
