@@ -1,29 +1,4 @@
-/*
-    Vorbereitung: GPX Track herunterladen und nach GeoJSON konvertieren
-    -------------------------------------------------------------------
-    Datenquelle https://www.data.gv.at/suche/?search-term=bike+trail+tirol&searchIn=catalog
-    Download Einzeletappen / Zur Ressource ...
-    Alle Dateien im unterverzeichnis data/ ablegen
-    Die .gpx Datei der eigenen Etappe als etappe00.gpx speichern
-    Die .gpx Datei über https://mapbox.github.io/togeojson/ in .geojson umwandeln und als etappe00.geojson speichern
-    Die etappe00.geojson Datei in ein Javascript Objekt umwandeln und als etappe00.geojson.js speichern
-
-    -> statt 00 natürlich die eigene Etappe (z.B. 01,02, ...25)
-*/
-
-// eine neue Leaflet Karte definieren
-
-// >> Grundkartenlayer mit OSM, basemap.at, Elektronische Karte Tirol (Sommer, Winter, Orthophoto jeweils mit Beschriftung) über L.featureGroup([]) definieren
-// WMTS URLs siehe https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol
-
-// Maßstab metrisch ohne inch
-//>>>
-// Start- und Endpunkte der Route als Marker mit Popup, Namen, Wikipedia Link und passenden Icons für Start/Ziel von https://mapicons.mapsmarker.com/ >> Punkt über Koordinaten definieren?
-
-// GeoJSON Track als Linie in der Karte einzeichnen und auf Ausschnitt zoomen >> aus gpx > wie wien stadtspaziergang einbinden
-// Einbauen nicht über async, sondern über ein L.geoJSON() mit einem Javascript Objekt (wie beim ersten Stadtspaziergang Wien Beispiel)
-
-// Baselayer control für OSM, basemap.at, Elektronische Karte Tirol hinzufügen
+// Start- und Endpunkte der Route als Marker mit Popup, Namen, Wikipedia Link und passenden Icons für Start/Ziel von https://mapicons.mapsmarker.com/ 
 
 // Overlay controls zum unabhängigem Ein-/Ausschalten der Route und Marker hinzufügen
 
@@ -92,6 +67,14 @@ let eKarteorthogruppe = L.featureGroup(
 
 myMap.addLayer(myLayers.osm);
 
+
+
+const geojsonLayer = L.geoJSON (geojson, {
+    style: function (feature) {
+        return { color: "#ff0000" }}
+});
+myMap.addLayer(geojsonLayer);
+
 let myMapControl = L.control.layers ({
 
     "Openstreetmap": myLayers.osm,
@@ -103,19 +86,13 @@ let myMapControl = L.control.layers ({
 },
 {   
    "Start- & Endpunkte" : etappeGroup,
-   //"Route" : geojson,
+   "Route" : geojsonLayer,
 },
 {
 collapsed: false 
 });
-
 myMap.addControl(myMapControl);
 
-const geojsonLayer = L.geoJSON (geojson, {
-    style: function (feature) {
-        return { color: "#ff0000" }}
-});
-myMap.addLayer(geojsonLayer);
 L.control.scale({
     maxWidth: 200,
     metric: true,
@@ -129,8 +106,13 @@ myMap.addLayer(etappeGroup);
 const start = [47.123786, 10.247623]
 const finish = [47.241426, 10.292558]
 
-L.marker(start).addTo(etappeGroup);
-L.marker(finish).addTo(etappeGroup);
+L.marker(start).addTo(etappeGroup).bindPopup("<p>Startpunkt</p><a href='https://de.wikipedia.org/wiki/St._Anton_am_Arlberg'>Wikipedia Link</a>");
+
+L.marker(finish).addTo(etappeGroup).bindPopup("<p>Endpunkt</p><a href='https://de.wikipedia.org/wiki/Steeg_(Tirol)'>Wikipedia Link</a>");
+
+
+//L.marker(start).addTo(etappeGroup);
+//L.marker(finish).addTo(etappeGroup);
 
 myMap.fitBounds(etappeGroup.getBounds());
 
