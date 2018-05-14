@@ -6,7 +6,6 @@ myMap.addLayer(), nicht vergessen
 
 let myMap = L.map("map"); // ! Abgleichen mit Name in html-File <div id="map"></div>
 let etappeGroup = L.featureGroup(); // =^Marker-Gruppe
-let markerGroup = L.featureGroup();
 let myLayers = {
     osm: L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
