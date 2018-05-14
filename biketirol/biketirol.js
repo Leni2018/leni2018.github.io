@@ -6,6 +6,7 @@ myMap.addLayer(), nicht vergessen
 
 let myMap = L.map("map"); // ! Abgleichen mit Name in html-File <div id="map"></div>
 let etappeGroup = L.featureGroup(); // =^Marker-Gruppe
+let markerGroup = L.featureGroup();
 let myLayers = {
     osm: L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -71,7 +72,7 @@ myMap.addLayer(myLayers.osm); // Website startet mit eKartesommergruppe (Sommerf
 
 const geojsonLayer = L.geoJSON (geojson, { //Einbindung der gpx-Datei, die als const geojson in eigener Datei (etappe31.geojson.js) definiert wurde. geojsonLayer ist die Variable, die hier definiert wird, geoJSON der Leaflet-Befehl, geojson bezieht sich auf die const geojson aus der etappe31.geojson.js-Datei
     style: function (feature) {
-        return { color: "#ff0000" }}
+        return { color: "#ff8922" }}
 });
 myMap.addLayer(geojsonLayer);
 
@@ -104,8 +105,27 @@ L.control.scale({
 
 myMap.addLayer(etappeGroup);
 const start = [47.123786, 10.247623]
+const myIcon = L.icon({
+    iconUrl: 'icons/start.png',
+    iconAnchor: [15, 35],
+ })
+ //L.icon(iconUrl: 'icons/start.png', iconAnchor: [15, 35],).addTo(myMap);
+ L.marker([47.123786, 10.247623], {icon: myIcon}).addTo(myMap);
+  
 const finish = [47.241426, 10.292558]
+let myIcon2 = L.icon({
+    iconUrl: 'icons/finish.png',
+    iconAnchor: [15, 35],
+ });
+ L.marker([47.241426, 10.292558], {icon: myIcon2}).addTo(myMap);
 
+
+ /*let myIcon2 = L.icon({
+    iconUrl: 'icons/finish.png',
+    iconAnchor: [15, 35],
+ });
+ L.marker([47.241426, 10.292558], {icon: myIcon2}).addTo(myMap);
+*/
 L.marker(start).addTo(etappeGroup).bindPopup("<p>Startpunkt</p><a href='https://de.wikipedia.org/wiki/St._Anton_am_Arlberg'>Wikipedia Link</a>"); //Marker-Definition, durch bondPopup ist das Popup direkt dran
 
 L.marker(finish).addTo(etappeGroup).bindPopup("<p>Endpunkt</p><a href='https://de.wikipedia.org/wiki/Steeg_(Tirol)'>Wikipedia Link</a>");
