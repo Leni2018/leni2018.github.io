@@ -86,7 +86,7 @@ let myMapControl = L.control.layers ({ // muss unterhalb der ganzen Variablen st
 },
 {   
    "Start- & Endpunkte" : etappeGroup,
-   "Route" : geojsonLayer,
+   "GPS-Track" : geojsonLayer,
 },
 {
 collapsed: false 
@@ -106,10 +106,12 @@ myMap.addLayer(etappeGroup);
 const start = [47.123786, 10.247623];
 const finish = [47.241426, 10.292558];
 
-L.marker(start, {icon: L.icon({iconUrl: 'icons/start.png', iconAnchor: [15, 35],})
+// icon wird automatisch an linker oberer Ecke der Parzelle angeteigt. !! Popup startet auch dort, deswegen muss es noch hochgeschoben werden
+
+L.marker(start, {icon: L.icon({iconUrl: 'icons/start.png', iconAnchor: [15, 35], popupAnchor : [0,-37])
   }).addTo(etappeGroup).bindPopup("<p>Startpunkt</p><a href='https://de.wikipedia.org/wiki/St._Anton_am_Arlberg'>Wikipedia Link</a>"); //Marker-Definition, durch bondPopup ist das Popup direkt dran + icon geändert
 
-L.marker(finish, {icon: L.icon({iconUrl: 'icons/finish.png', iconAnchor: [15, 35],})
+L.marker(finish, {icon: L.icon({iconUrl: 'icons/finish.png', iconAnchor: [15, 35],}) 
 }).addTo(etappeGroup).bindPopup("<p>Endpunkt</p><a href='https://de.wikipedia.org/wiki/Steeg_(Tirol)'>Wikipedia Link</a>");
 
 myMap.fitBounds(etappeGroup.getBounds());
