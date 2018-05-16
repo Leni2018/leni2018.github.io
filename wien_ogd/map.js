@@ -69,7 +69,7 @@ async function ladeGeojsonLayer(koffer) { //datenAttribute wird hier als neue Va
     const response = await fetch(koffer.json);
     const response_json = await response.json();
 
-    if (koffer.icon){
+    if (datenAttribute.icon){
         console.log("Pause")
     }
 
@@ -94,10 +94,10 @@ async function ladeGeojsonLayer(koffer) { //datenAttribute wird hier als neue Va
             }
         },
         pointToLayer : function(geoJsonPoint, latlng) {
-            if (koffer.icon) {
+            if (datenAttribute.icon) {
                 return L.marker(latlng, {
                     icon : L.icon({//l.icon wird hier neu festgelegt
-                        iconUrl : koffer.icon,
+                        iconUrl : datenAttribute.icon,
                         iconAnchor : [16, 32], // Größe der icons = 32*32, und Anchor wird immer am link oberen Eck gesetzt
                         popupAnchor : [0, -32], //immer ausgehend vom iconAnchor
                     }) 

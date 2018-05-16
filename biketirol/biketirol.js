@@ -4,8 +4,14 @@ L. verweist auf Leaflet-Dokumentation, gelb geschriebenes ruft dort hinterlegte 
 myMap.addLayer(), nicht vergessen
 */
 
-let myMap = L.map("map"); // ! Abgleichen mit Name in html-File <div id="map"></div>
+let myMap = L.map("map", {
+    fullscreenControl: true,
+    fullscreenControlOptions: {
+      position: 'topleft'
+    }
+}); 
 let etappeGroup = L.featureGroup(); // =^Marker-Gruppe
+let trackGroup = L.featureGroup().addTo(myMap);
 let myLayers = {
     osm: L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -47,7 +53,6 @@ let myLayers = {
     ),
 
 };
-
 let eKartesommergruppe = L.featureGroup( // fügt Basemaps zusammen: zum einen Orthophoto, zum anderen zugehörige Beschriftung
     [
         myLayers.eKartesommer,
@@ -67,13 +72,16 @@ let eKarteorthogruppe = L.featureGroup(
     ]
 );
 
+
 myMap.addLayer(myLayers.osm); // Website startet mit eKartesommergruppe (Sommerfoto inkl Beschriftung)
 
-const geojsonLayer = L.geoJSON (geojson, { //Einbindung der gpx-Datei, die als const geojson in eigener Datei (etappe31.geojson.js) definiert wurde. geojsonLayer ist die Variable, die hier definiert wird, geoJSON der Leaflet-Befehl, geojson bezieht sich auf die const geojson aus der etappe31.geojson.js-Datei
-    style: function (feature) {
-        return { color: "#ff8922" }}
-});
-myMap.addLayer(geojsonLayer);
+
+
+//const geojsonLayer = L.geoJSON (geojson, { //Einbindung der gpx-Datei, die als const geojson in eigener Datei (etappe31.geojson.js) definiert wurde. geojsonLayer ist die Variable, die hier definiert wird, geoJSON der Leaflet-Befehl, geojson bezieht sich auf die const geojson aus der etappe31.geojson.js-Datei// wird jetzt nicht mehr gebraucht, da wir ein gpx.-Plugin einbinden
+//   style: function (feature) {
+//       return { color: "#ff8922" }}
+//});
+//myMap.addLayer(geojsonLayer);
 
 let myMapControl = L.control.layers ({ // muss unterhalb der ganzen Variablen stehen (!!geojsonLayer)
 
@@ -86,7 +94,7 @@ let myMapControl = L.control.layers ({ // muss unterhalb der ganzen Variablen st
 },
 {   
    "Start- & Endpunkte" : etappeGroup,
-   "GPS-Track" : geojsonLayer,
+   "GPS-Track" : trackGroup,
 },
 {
 collapsed: false 
@@ -114,5 +122,20 @@ L.marker(start, {icon: L.icon({iconUrl: 'icons/start.png', iconAnchor: [15, 35],
 L.marker(finish, {icon: L.icon({iconUrl: 'icons/finish.png', iconAnchor: [15, 35],}) 
 }).addTo(etappeGroup).bindPopup("<p>Endpunkt</p><a href='https://de.wikipedia.org/wiki/Steeg_(Tirol)'>Wikipedia Link</a>");
 
-myMap.fitBounds(etappeGroup.getBounds());
+
+
+let gpxTrack = new L.GPX("data/etappe31.gpx", {
+    async : true,
+}).addTo(trackGroup);
+gpxTrack.on("loaded", function(evt) {
+    console.log("get_distance",evt.target.get_distance().toFixed(0)) //Abfrage vom Track; toFixed (0) = rundet Dezimalstellen auf/ab
+    console.log("get_elevation_min",evt.target.get_elevation_min().toFixed(0))
+    console.log("get_elevation_max",evt.target.get_elevation_max().toFixed(0))
+    console.log("get_elevation_gain",evt.target.get_elevation_gain().toFixed(0))
+    console.log("get_elevation_loss",evt.target.get_elevation_loss().toFixed(0))
+    let laenge = evt.target.get_distance().toFixed(0);
+    document.getElementById("laenge").innerHTML = laenge;
+    myMap.fitBounds(evt.target.getBounds());
+})
+//myMap.fitBounds(etappeGroup.getBounds());
 

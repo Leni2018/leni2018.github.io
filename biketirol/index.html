@@ -10,7 +10,12 @@
     
     <link rel="stylesheet" href="../js/leaflet/leaflet.css" />
     <script src="../js/leaflet/leaflet.js"></script>
-    <script src="etappe31.geojson.js"></script> <!--neue geojson-Datei einfügen nicht vergessen-->
+    <!-- <script src="etappe31.geojson.js"></script> neue geojson-Datei einfügen nicht vergessen-->
+    
+    <link rel="stylesheet" href="../js/leaflet.fullscreen/leaflet.fullscreen.css" /> <!--stylesheet & script einbinden, wenn eingebunden kann im Seitenquelltext angezeigt werden, ob die Links da sind > wenn sie funktionieren sind sie da > gute Kontrolle-->
+    <script src="../js/leaflet.fullscreen/Leaflet.fullscreen.js"></script>
+
+    <script src="../js/leaflet.gpx/gpx.js"></script>
 
     <link rel="stylesheet" href="styles.css" />
     <script defer src="biketirol.js"></script>
@@ -38,6 +43,7 @@
         <h1>Etappe 31 von St. Anton nach Steeg</h1>
 
         <p>Auf dieser 35 Kilometer langen Strecke fahren Sie ausschließlich auf Asphaltwegen und überwinden dabei 350 Höhenmeter, wobei mit dem Arlbergpass die höchste Steigung gleich zu Beginn auf Sie wartet. Begleitet werden Sie auf dieser Etappe von schönen Panoramen und stets neuen Einblicken.</p>
+        <p>Tourdaten: Gesamtlänge <span id ="laenge"></span>m</p> <!-- span id verweist auf Abfrage in js-Datei zur gesamten Tourlänge (laenge) etc-->
         <div id="map"></div>
 
         <h2>Streckenbeschreibung</h2>
