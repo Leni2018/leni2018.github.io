@@ -4,7 +4,6 @@ Ein paar Auszüge:
 Layer für Track und Marker hinzufügen  
 let overlayTrack = L.featureGroup().addTo(karte);  <-- addTo direkt hier
 
-
 Auf Reihenfolge achten (bei Error: XY is not defined: Variablen (let/const) müssen immer vor Aufruf definiert werden
 L. verweist auf Leaflet-Dokumentation, gelb geschriebenes ruft dort hinterlegte Befehle ab
 myMap.addLayer(), nicht vergessen
@@ -53,7 +52,6 @@ let myLayers = {
     ),
 
 };
-
 let eKartesommergruppe = L.featureGroup([ // fügt die Beschriftung zum Sommerlayer, Winterlayer und Ortophotolayer dazu
 
         myLayers.eKartesommer,
