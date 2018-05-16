@@ -54,7 +54,7 @@ let myLayers = {
 
 };
 
-let eKartesommergruppe = L.featureGroup( // fügt die Beschriftung zum Sommerlayer, Winterlayer und Ortophotolayer dazu
+let eKartesommergruppe = L.featureGroup([ // fügt die Beschriftung zum Sommerlayer, Winterlayer und Ortophotolayer dazu
 
         myLayers.eKartesommer,
         myLayers.eKartebeschriftung,
