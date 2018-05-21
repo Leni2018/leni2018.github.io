@@ -126,7 +126,7 @@ L.marker(finish, {icon: L.icon({iconUrl: 'icons/finish.png', iconAnchor: [15, 35
 
 // show GPX track length in HTML page > wird oberhalb der Karte als Text angezeigt.  https://github.com/webmapping/webmapping.github.io/commit/ca028181a327414ee044ad7081392fe15f7fc275
 //Einbindung in html.Datei nötig <p><strong>Tourdaten</strong>: Gesamtlänge <span id ="laenge"></span>m, tiefster Punkt <span id ="tiefster"></span>m, höchster Punkt <span id ="hoechster"></span>m, Aufstieg <span id ="aufstieg"></span>m, Abstieg <span id ="abstieg"></span>m</p> <!-- span id verweist auf Abfrage in js-Datei zur gesamten Tourlänge (laenge) etc-->
-<div id="map"></div>
+
 
 let gpxTrack = new L.GPX("data/etappe31.gpx", {
     async : true,
