@@ -1,4 +1,5 @@
 /*
+Readme: https://github.com/webmapping/webmapping.github.io/blob/master/biketirol/readme.md
 Auf Reihenfolge achten (bei Error: XY is not defined: Variablen (let/const) müssen immer vor Aufruf definiert werden
 L. verweist auf Leaflet-Dokumentation, gelb geschriebenes ruft dort hinterlegte Befehle ab
 myMap.addLayer(), nicht vergessen
@@ -48,7 +49,8 @@ let myLayers = {
     eKartebeschriftung: L.tileLayer( // Ortsnamen
         "http://wmts.kartetirol.at/wmts/gdi_nomenklatur/GoogleMapsCompatible/{z}/{x}/{y}.png8",
         {
-            attribution: "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol/resource/062d55d0-4533-4d3f-b507-106bb44285b7'>elektronische Karte Tirol</a>"
+            attribution: "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol/resource/062d55d0-4533-4d3f-b507-106bb44285b7'>elektronische Karte Tirol</a>",
+            pane: "overlayPane", // angeben, damit die Stapelordnung auch funktioniert
         }
     ),
 
@@ -122,7 +124,9 @@ L.marker(start, {icon: L.icon({iconUrl: 'icons/start.png', iconAnchor: [15, 35],
 L.marker(finish, {icon: L.icon({iconUrl: 'icons/finish.png', iconAnchor: [15, 35],}) 
 }).addTo(etappeGroup).bindPopup("<p>Endpunkt</p><a href='https://de.wikipedia.org/wiki/Steeg_(Tirol)'>Wikipedia Link</a>");
 
-
+// show GPX track length in HTML page > wird oberhalb der Karte als Text angezeigt.  https://github.com/webmapping/webmapping.github.io/commit/ca028181a327414ee044ad7081392fe15f7fc275
+//Einbindung in html.Datei nötig <p><strong>Tourdaten</strong>: Gesamtlänge <span id ="laenge"></span>m, tiefster Punkt <span id ="tiefster"></span>m, höchster Punkt <span id ="hoechster"></span>m, Aufstieg <span id ="aufstieg"></span>m, Abstieg <span id ="abstieg"></span>m</p> <!-- span id verweist auf Abfrage in js-Datei zur gesamten Tourlänge (laenge) etc-->
+<div id="map"></div>
 
 let gpxTrack = new L.GPX("data/etappe31.gpx", {
     async : true,
@@ -133,9 +137,16 @@ gpxTrack.on("loaded", function(evt) {
     console.log("get_elevation_max",evt.target.get_elevation_max().toFixed(0))
     console.log("get_elevation_gain",evt.target.get_elevation_gain().toFixed(0))
     console.log("get_elevation_loss",evt.target.get_elevation_loss().toFixed(0))
-    let laenge = evt.target.get_distance().toFixed(0);
+    let laenge = evt.target.get_distance().toFixed(0);//Variable erstellen
     document.getElementById("laenge").innerHTML = laenge;
+    let tiefster = evt.target.get_elevation_min().toFixed(0);//Ändern
+    document.getElementById("tiefster").innerHTML = tiefster;//Ändern
+    let hoechster = evt.target.get_elevation_max().toFixed(0);
+    document.getElementById("hoechster").innerHTML = hoechster;
+    let aufstieg = evt.target.get_elevation_gain().toFixed(0);
+    document.getElementById("aufstieg").innerHTML = aufstieg;
+    let abstieg = evt.target.get_elevation_loss().toFixed(0);
+    document.getElementById("abstieg").innerHTML = abstieg;
     myMap.fitBounds(evt.target.getBounds());
 })
-//myMap.fitBounds(etappeGroup.getBounds());
 
