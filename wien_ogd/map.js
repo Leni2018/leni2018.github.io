@@ -65,8 +65,8 @@ L.control.scale({
 }).addTo(karte);
 
 // asynchrone Funktion zum Laden eines GeoJSON Layers
-async function ladeGeojsonLayer(koffer) { //datenAttribute wird hier als neue Variable definiert. Geht immer, wenn man eine Funktion schreibt
-    const response = await fetch(koffer.json);
+async function ladeGeojsonLayer(datenAttribute) { //datenAttribute wird hier als neue Variable definiert. Geht immer, wenn man eine Funktion schreibt
+    const response = await fetch(datenAttribute.json);
     const response_json = await response.json();
 
     if (datenAttribute.icon){
