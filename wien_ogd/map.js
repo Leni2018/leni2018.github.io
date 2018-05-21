@@ -1,5 +1,12 @@
+//readme dazu: https://github.com/webmapping/webmapping.github.io/blob/master/wien_ogd/readme.md
+
 // Leaflet Karte initialisieren
-let karte = L.map("divKarte");
+let karte = L.map("divKarte", {
+    fullscreenControl: true,
+    fullscreenControlOptions: {
+      position: 'topleft'
+    }
+}); 
 
 // Gruppe für GeoJSON Layer definieren
 let geojsonGruppe = L.featureGroup().addTo(karte);
@@ -72,6 +79,7 @@ async function ladeGeojsonLayer(datenAttribute) { //datenAttribute wird hier als
     if (datenAttribute.icon){
         console.log("Pause")
     }
+    
 
     // GeoJSON Geometrien hinzufügen und auf Ausschnitt zoomen
     const geojsonObjekt = L.geoJSON(response_json, {
