@@ -98,7 +98,7 @@ let myMapControl = L.control.layers ({ // muss unterhalb der ganzen Variablen st
 },
 {   
    "Start- & Endpunkte" : etappeGroup,
-   "GPS-Track" : trackGroup,
+   // "GPS-Track" : trackGroup, > in blau
    "Steigungslinie" : overlaySteigung,
 },
 {
@@ -140,7 +140,7 @@ let hoehenProfil = L.control.elevation({
 
 let gpxTrack = new L.GPX("data/etappe31.gpx", {
     async : true,
-}).addTo(trackGroup);
+})//.addTo(trackGroup);
 gpxTrack.on("loaded", function(evt) {
     console.log("get_distance",evt.target.get_distance().toFixed(0)) //Abfrage vom Track; toFixed (0) = rundet Dezimalstellen auf/ab
     console.log("get_elevation_min",evt.target.get_elevation_min().toFixed(0))
@@ -206,7 +206,9 @@ gpxTrack.on('addline', function(evt){
                 [p1.lat,p1.lng], 
                 [p2.lat,p2.lng], 
             ],{
-                 color: farbe
+                 color: farbe,
+                 weight: 5,
+                 opacity : 10,
             }
             ).addTo(overlaySteigung);
     }
