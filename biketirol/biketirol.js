@@ -11,8 +11,10 @@ let myMap = L.map("map", {
       position: 'topleft'
     }
 }); 
+
 let etappeGroup = L.featureGroup(); // =^Marker-Gruppe
 let trackGroup = L.featureGroup().addTo(myMap);
+let overlaySteigung = L.featureGroup().addTo(myMap);
 let myLayers = {
     osm: L.tileLayer(
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -97,6 +99,7 @@ let myMapControl = L.control.layers ({ // muss unterhalb der ganzen Variablen st
 {   
    "Start- & Endpunkte" : etappeGroup,
    "GPS-Track" : trackGroup,
+   "Steigungslinie" : overlaySteigung,
 },
 {
 collapsed: false 
@@ -127,6 +130,13 @@ L.marker(finish, {icon: L.icon({iconUrl: 'icons/finish.png', iconAnchor: [15, 35
 // show GPX track length in HTML page > wird oberhalb der Karte als Text angezeigt.  https://github.com/webmapping/webmapping.github.io/commit/ca028181a327414ee044ad7081392fe15f7fc275
 //Einbindung in html.Datei nötig <p><strong>Tourdaten</strong>: Gesamtlänge <span id ="laenge"></span>m, tiefster Punkt <span id ="tiefster"></span>m, höchster Punkt <span id ="hoechster"></span>m, Aufstieg <span id ="aufstieg"></span>m, Abstieg <span id ="abstieg"></span>m</p> <!-- span id verweist auf Abfrage in js-Datei zur gesamten Tourlänge (laenge) etc-->
 
+//Höhenprofil control hinzufügen, mit addTo ist es sofort auf der Karte > Tipp von Klaus
+let hoehenProfil = L.control.elevation({
+    position: "topright",
+    theme: "steelblue-theme",
+    collapsed: true, // wird damit als Icon neben der Overlaycontrol angezeigt. Kann nicht in die Overlaycontrol eingebunden werden
+}).addTo(myMap);
+
 
 let gpxTrack = new L.GPX("data/etappe31.gpx", {
     async : true,
@@ -150,3 +160,55 @@ gpxTrack.on("loaded", function(evt) {
     myMap.fitBounds(evt.target.getBounds());
 })
 
+gpxTrack.on('addline', function(evt){
+    hoehenProfil.addData(evt.line);
+    console.log(evt.line); // in Konsole der HTML können dann unter Options die Infos dazu abgerufen werden
+    console.log(evt.line.getLatLngs()); // damitwerden die Koordinaten geholt
+    console.log(evt.line.getLatLngs()[0]); // 0 ruft erstes Element ab > gibt Koordinaten des 1. Punkts aus
+    console.log(evt.line.getLatLngs()[0].lat); // ruft Infos über lat etc. ab
+    console.log(evt.line.getLatLngs()[0].lng); 
+    console.log(evt.line.getLatLngs()[0].meta);
+    console.log(evt.line.getLatLngs()[0].ele); 
+
+    // alle Segmente der Steigungslinie hinzufügen
+    let gpxLinie = evt.line.getLatLngs(); //Shortcut erzeugt
+    for (let i = 1; i < gpxLinie.length; i++) {
+        let p1 = gpxLinie[i-1]; // es gibt auch einen P0 > hiermit wird die Differenz berechnet
+        let p2 = gpxLinie[i];
+        
+// Entfernung zw den Punkten berechnen
+        let dist = myMap.distance(
+            [p1.lat,p1.lng], 
+            [p2.lat,p2.lng], 
+        );
+    
+        // delta für Berechnung vom Höhenunterschied
+        let delta = p2.meta.ele - p1.meta.ele;
+
+
+        //Steigung in % berechnen
+        //? fragt Bedingung ab und vergleicht Ausdruck 1 : Ausdruck 2
+        let prozent = (dist > 0) ? (delta / dist *100.0).toFixed(1) : 0 ;
+        console.log(p1.lat,p1.lng,p2.lat,p2.lng,dist,delta,prozent);
+// farben: http://colorbrewer2.org/#type=sequential&scheme=BuGn&n=4
+        let farbe = 
+            prozent > 10 ? "#cb181d" : 
+            prozent > 6 ? "#fb6a4a" : 
+            prozent > 2 ? "#fcae91" : 
+            prozent > 0 ? "#fee5d9" : 
+            prozent > -2 ? "#edf8e9" : 
+            prozent > -6 ? "#bae4b3" : 
+            prozent > -10 ? "#74c476" : 
+                           "#238b45"; // hier Ausdruck => entweder oder
+
+        let segment = L.polyline(
+            [
+                [p1.lat,p1.lng], 
+                [p2.lat,p2.lng], 
+            ],{
+                 color: farbe
+            }
+            ).addTo(overlaySteigung);
+    }
+});
+// mit den ganzen console.logs sind alle Daten des GPX-Tracks verfügbar. Stehen jetzt nur da, die machen noch nix
